@@ -52,6 +52,25 @@ namespace BaseBuilder_Reloaded.Scripts.Models
         /// </summary>
         public void UnsubscribeTileChanged(Action<Tile> callback) => cbTileChanged -= callback;
 
+        [Obsolete]
+        public void RandomizeTiles()
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    if (UnityEngine.Random.Range(0, 2) == 0)
+                    {
+                        _tiles[x, y].Type = TileType.Water;
+                    }
+                    else
+                    {
+                        _tiles[x, y].Type = TileType.Grass;
+                    }
+                }
+            }
+        }
+
         private void InitializeWorld()
         {
             _tiles = new Tile[Width, Height];

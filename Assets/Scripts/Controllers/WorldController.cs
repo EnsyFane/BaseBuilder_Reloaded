@@ -43,6 +43,12 @@ namespace BaseBuilder_Reloaded.Scripts.Controllers
 
         public void Update()
         {
+            // USE FOR DEBUGGING ONLY
+            //if (Input.GetMouseButtonUp(0))
+            //{
+            //    World.RandomizeTiles();
+            //}
+
             // TODO: Add pause, unpause and speed controls.
             if (!IsPaused)
             {
