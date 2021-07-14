@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BaseBuilder_Reloaded.Scripts.Models
@@ -34,6 +32,9 @@ namespace BaseBuilder_Reloaded.Scripts.Models
             // TODO: Update all entities.
         }
 
+        /// <summary>
+        /// Returns the tile at the given coordinates.
+        /// </summary>
         public Tile GetTileAt(int x, int y)
         {
             if (x > Width || x < 0 || y >= Height || y < 0)
