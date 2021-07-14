@@ -5,8 +5,6 @@ namespace BaseBuilder_Reloaded.Scripts.Models
 {
     public class World
     {
-        public static World Instance { get; private set; }
-
         private Tile[,] _tiles;
 
         public int Width { get; private set; }
@@ -16,7 +14,6 @@ namespace BaseBuilder_Reloaded.Scripts.Models
 
         public World(int width, int height)
         {
-            Instance = this;
             Width = width;
             Height = height;
 

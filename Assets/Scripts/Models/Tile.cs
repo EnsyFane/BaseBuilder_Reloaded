@@ -29,8 +29,8 @@ namespace BaseBuilder_Reloaded.Scripts.Models
             }
         }
 
-        public int X { get; protected set; }
-        public int Y { get; protected set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
 
         // TODO: This is just hardcoded for now. Basically just a reminder of something we
         // might want to do more with in the future.

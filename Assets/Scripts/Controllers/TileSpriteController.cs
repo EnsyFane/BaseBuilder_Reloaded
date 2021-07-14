@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace BaseBuilder_Reloaded.Scripts.Controllers
+{
+    public class TileSpriteController : MonoBehaviour
+    {
+        // Start is called before the first frame update
+        private void Start()
+        {
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+        }
+    }
+}
