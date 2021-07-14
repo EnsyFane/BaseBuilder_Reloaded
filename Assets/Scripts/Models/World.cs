@@ -45,7 +45,7 @@ namespace BaseBuilder_Reloaded.Scripts.Models
         /// <summary>
         /// Register a function to be called back when a <see cref="Tile"/> changes.
         /// </summary>
-        public void SubscibeTileChanged(Action<Tile> callback) => cbTileChanged += callback;
+        public void SubscribeTileChanged(Action<Tile> callback) => cbTileChanged += callback;
 
         /// <summary>
         /// Unregister a function from <see cref="cbTileChanged"/> callback.

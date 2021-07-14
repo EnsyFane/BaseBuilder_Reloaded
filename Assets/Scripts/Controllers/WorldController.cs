@@ -32,12 +32,12 @@ namespace BaseBuilder_Reloaded.Scripts.Controllers
 
             if (string.IsNullOrEmpty(worldSaveFile))
             {
-                CreateWorldFromSaveFile();
-                worldSaveFile = string.Empty;
+                CreateEmptyWorld();
             }
             else
             {
-                CreateEmptyWorld();
+                CreateWorldFromSaveFile();
+                worldSaveFile = string.Empty;
             }
         }
 
