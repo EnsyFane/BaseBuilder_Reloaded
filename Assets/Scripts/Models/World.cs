@@ -88,7 +88,7 @@ namespace BaseBuilder_Reloaded.Scripts.Models
             }
 
             // TODO: Add better logging.
-            Debug.Log($"World created with {Width * Height} tiles.");
+            //Debug.Log($"World created with {Width * Height} tiles.");
         }
 
         private void OnTileChanged(Tile t)
