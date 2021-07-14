@@ -5,19 +5,23 @@ using UnityEngine.SceneManagement;
 
 namespace BaseBuilder_Reloaded.Scripts.Controllers
 {
+    /// <summary>
+    /// Controller that creates and keeps track of all object in the <see cref="World"/>. (Keeps track of only the data, not the actual GameObjects).
+    /// </summary>
     public class WorldController : MonoBehaviour
     {
         public static WorldController Instance { get; private set; }
         public World World { get; private set; }
+
         private static string worldSaveFile = string.Empty;
 
         public bool IsDialogOpen { get; set; }
-        private bool _isPaused = false;
+        private bool _isWorldPaused = false;
 
-        public bool IsPaused
+        public bool IsGamePaused
         {
-            get => _isPaused || IsDialogOpen;
-            set => _isPaused = value;
+            get => _isWorldPaused || IsDialogOpen;
+            set => _isWorldPaused = value;
         }
 
         public void OnEnable()
@@ -50,14 +54,14 @@ namespace BaseBuilder_Reloaded.Scripts.Controllers
             //}
 
             // TODO: Add pause, unpause and speed controls.
-            if (!IsPaused)
+            if (!IsGamePaused)
             {
                 World.Update(Time.deltaTime);
             }
         }
 
         /// <summary>
-        /// Loads a world from a save file. Reloads the current scene on click.
+        /// Loads a world from a save file. Reloads the current scene.
         /// </summary>
         /// <param name="fileName"></param>
         public void LoadWorldFromFile(string fileName)

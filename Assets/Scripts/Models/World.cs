@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace BaseBuilder_Reloaded.Scripts.Models
 {
+    /// <summary>
+    /// Model for the world.
+    /// </summary>
     public class World
     {
         private Tile[,] _tiles;

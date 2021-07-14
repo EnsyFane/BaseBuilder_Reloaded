@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace BaseBuilder_Reloaded.Scripts.Controllers
 {
+    /// <summary>
+    /// Controller that creates and modifies <see cref="GameObject"/>s associated with <see cref="Tile"/>s.
+    /// </summary>
     public class TileSpriteController : MonoBehaviour
     {
         private Dictionary<Tile, GameObject> _tileGameObjectMap;
@@ -46,7 +49,7 @@ namespace BaseBuilder_Reloaded.Scripts.Controllers
         {
             if (!_tileGameObjectMap.ContainsKey(tileData))
             {
-                Debug.LogError("Unrecognized Tile.");
+                Debug.LogError("Unrecognized tile.");
                 return;
             }
 

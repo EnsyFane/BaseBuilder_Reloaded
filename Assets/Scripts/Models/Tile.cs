@@ -3,7 +3,7 @@ using System;
 namespace BaseBuilder_Reloaded.Scripts.Models
 {
     /// <summary>
-    /// Model for a tile, the building blocks of the world.
+    /// Model for a tile, the building blocks of the <see cref="World"/>.
     /// </summary>
     public class Tile
     {

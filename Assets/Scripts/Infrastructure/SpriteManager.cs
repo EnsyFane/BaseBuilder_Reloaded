@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 /// <summary>
-/// Class used to retrieve sprites from game files.
+/// Class used to load and offer sprites from game files.
 /// </summary>
 public class SpriteManager : MonoBehaviour
 {
@@ -19,6 +18,11 @@ public class SpriteManager : MonoBehaviour
         LoadSprites();
     }
 
+    /// <summary>
+    /// Retrieves a <see cref="Sprite"/> with the given category and name. If the Sprite doesn't exist it returns an error sprite.
+    /// </summary>
+    /// <param name="categoryName">The category of the sprite. (Usually the subdirectory in which the sprite is placed)</param>
+    /// <param name="spriteName">The name of the sprite.</param>
     public Sprite GetSprite(string categoryName, string spriteName)
     {
         var finalSpriteName = categoryName + "/" + spriteName;
@@ -27,8 +31,8 @@ public class SpriteManager : MonoBehaviour
             return _sprites[finalSpriteName];
         }
 
-        // TODO: Return an error texture.
-        return null;
+        Debug.Log($"No sprite with identifier {finalSpriteName} was loaded.");
+        return _sprites["Error/Error"];
     }
 
     private void LoadSprites()
@@ -42,7 +46,7 @@ public class SpriteManager : MonoBehaviour
 
     private void LoadSpritesFromDirectory(string directoryPath)
     {
-        Debug.Log($"Loading Sprites from directory: {directoryPath}.");
+        //Debug.Log($"Loading Sprites from directory: {directoryPath}.");
 
         var subDirectories = Directory.GetDirectories(directoryPath);
         foreach (var subDirectory in subDirectories)
@@ -90,6 +94,7 @@ public class SpriteManager : MonoBehaviour
     private void LoadSprite(string spriteCategory, string spriteName, Texture2D texture, Rect spriteCoordinates, int pixelsPerUnit)
     {
         var finalSpriteName = spriteCategory + "/" + spriteName;
+        //Debug.Log(finalSpriteName);
 
         var pivotPoint = new Vector2(0.5f, 0.5f);
         var sprite = Sprite.Create(texture, spriteCoordinates, pivotPoint, pixelsPerUnit);
