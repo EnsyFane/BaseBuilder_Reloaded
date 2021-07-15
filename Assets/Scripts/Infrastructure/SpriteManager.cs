@@ -1,3 +1,4 @@
+using Assets.Scripts.Infrastructure.Config;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -81,13 +82,23 @@ public class SpriteManager : MonoBehaviour
             var jsonPath = Path.Combine(basePath, baseSpriteName + ".json");
             if (File.Exists(jsonPath))
             {
-                // TODO: Parse the json file to get tile map sprites
+                var spriteJson = File.ReadAllText(jsonPath);
+                var spriteDescriptor = JsonUtility.FromJson<SpriteDescriptor>(spriteJson);
+                LoadSpriteMapFromJson(spriteCategory, imageTexture, spriteDescriptor);
             }
             else
             {
                 // If no json file is found for texture assue it is a simple 32x32 texture.
                 LoadSprite(spriteCategory, baseSpriteName, imageTexture, new Rect(0, 0, imageTexture.width, imageTexture.height), 32);
             }
+        }
+    }
+
+    private void LoadSpriteMapFromJson(string spriteCategory, Texture2D imageTexture, SpriteDescriptor spriteDescriptor)
+    {
+        foreach (var sprite in spriteDescriptor.Sprites)
+        {
+            LoadSprite(spriteCategory, sprite.Name, imageTexture, new Rect(sprite.X, sprite.Y, sprite.Width, sprite.Height), sprite.pixelsPerUnit);
         }
     }
 
