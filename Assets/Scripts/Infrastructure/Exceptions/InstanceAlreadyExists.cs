@@ -1,6 +1,6 @@
 using System;
 
-namespace BaseBuilder_Reloaded.Scripts.Infrastructure.Exceptions
+namespace Assets.Scripts.Infrastructure.Exceptions
 {
     /// <summary>
     /// Exception thrown when a singleton object is reinstantiated.

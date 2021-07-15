@@ -2,7 +2,7 @@ using BaseBuilder_Reloaded.Scripts.Models;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BaseBuilder_Reloaded.Scripts.Controllers
+namespace Assets.Scripts.Controllers
 {
     /// <summary>
     /// Controller that creates and modifies <see cref="GameObject"/>s associated with <see cref="Tile"/>s.

@@ -1,10 +1,13 @@
+using MoonSharp.Interpreter;
 using System;
+using UnityEngine;
 
-namespace BaseBuilder_Reloaded.Scripts.Models
+namespace Assets.Scripts.Models
 {
     /// <summary>
     /// Model for a tile, the building blocks of the <see cref="World"/>.
     /// </summary>
+    [MoonSharpUserData]
     public class Tile
     {
         /// <summary>
@@ -67,6 +70,28 @@ namespace BaseBuilder_Reloaded.Scripts.Models
             }
         }
 
+        public Furniture Furniture { get; private set; }
+
+        public Tile NorthTile
+        {
+            get => World.Instance.GetTileAt(X, Y + 1);
+        }
+
+        public Tile EastTile
+        {
+            get => World.Instance.GetTileAt(X + 1, Y);
+        }
+
+        public Tile SouthTile
+        {
+            get => World.Instance.GetTileAt(X, Y - 1);
+        }
+
+        public Tile WestTile
+        {
+            get => World.Instance.GetTileAt(X - 1, Y);
+        }
+
         public Tile(int x, int y)
         {
             X = x;
@@ -82,15 +107,51 @@ namespace BaseBuilder_Reloaded.Scripts.Models
         /// Unregister a function from <see cref="cbTileChanged"/> callback.
         /// </summary>
         public void UnsubscribeTileTypeChanged(Action<Tile> callback) => cbTileChanged -= callback;
-    }
 
-    /// <summary>
-    /// Represents all the tile types supported by the game.
-    /// </summary>
-    public enum TileType
-    {
-        Grass,
-        Water
+        public bool PlaceFurnitureInside(Furniture furniture)
+        {
+            if (furniture == null)
+            {
+                return UnplaceFurniture();
+            }
+
+            if (!furniture.IsPositionValid(this))
+            {
+                Debug.LogError("Trying to place furniture on an invalid tile.");
+                return false;
+            }
+
+            for (var x = X; x < X + furniture.Width; x++)
+            {
+                for (var y = X; y < Y + furniture.Height; y++)
+                {
+                    var tile = World.Instance.GetTileAt(x, y);
+                    tile.Furniture = furniture;
+                }
+            }
+
+            return true;
+        }
+
+        public bool UnplaceFurniture()
+        {
+            if (Furniture == null)
+            {
+                return false;
+            }
+
+            var uninstalledFurniture = Furniture;
+            for (var x = X; x < X + uninstalledFurniture.Width; x++)
+            {
+                for (var y = Y; y < Y + uninstalledFurniture.Height; y++)
+                {
+                    var tile = World.Instance.GetTileAt(x, y);
+                    tile.Furniture = null;
+                }
+            }
+
+            return true;
+        }
     }
 
     /// <summary>

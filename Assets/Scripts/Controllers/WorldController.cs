@@ -3,7 +3,7 @@ using BaseBuilder_Reloaded.Scripts.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BaseBuilder_Reloaded.Scripts.Controllers
+namespace Assets.Scripts.Controllers
 {
     /// <summary>
     /// Controller that creates and keeps track of all object in the <see cref="World"/>. (Keeps track of only the data, not the actual GameObjects).

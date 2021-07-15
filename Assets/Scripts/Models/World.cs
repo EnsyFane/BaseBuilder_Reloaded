@@ -1,13 +1,16 @@
+using MoonSharp.Interpreter;
 using System;
-using UnityEngine;
 
-namespace BaseBuilder_Reloaded.Scripts.Models
+namespace Assets.Scripts.Models
 {
     /// <summary>
     /// Model for the world.
     /// </summary>
+    [MoonSharpUserData]
     public class World
     {
+        public static World Instance { get; private set; }
+
         private Tile[,] _tiles;
 
         public int Width { get; private set; }
@@ -17,6 +20,8 @@ namespace BaseBuilder_Reloaded.Scripts.Models
 
         public World(int width, int height)
         {
+            Instance = this;
+
             Width = width;
             Height = height;
 
