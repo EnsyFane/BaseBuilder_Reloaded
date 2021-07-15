@@ -65,7 +65,7 @@ public class SpriteManager : MonoBehaviour
 
     private void LoadImage(string spriteCategory, string filePath)
     {
-        // TODO: Unity's LoadImage is returning true when loading files that end with .meta or .xml
+        // TEMP: Unity's LoadImage is returning true when loading files that end with .meta or .xml
         if (filePath.EndsWith(".xml") || filePath.EndsWith(".meta"))
         {
             return;
