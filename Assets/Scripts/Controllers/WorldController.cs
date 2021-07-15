@@ -1,5 +1,5 @@
-using BaseBuilder_Reloaded.Scripts.Infrastructure.Exceptions;
-using BaseBuilder_Reloaded.Scripts.Models;
+using Assets.Scripts.Infrastructure.Exceptions;
+using Assets.Scripts.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

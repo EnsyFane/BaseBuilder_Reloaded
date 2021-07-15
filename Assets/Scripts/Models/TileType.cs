@@ -18,7 +18,7 @@
                 case TileType.Grass:
                     return true;
 
-                case TileType:
+                case TileType.Water:
                 default:
                     return false;
             }
