@@ -13,15 +13,11 @@
     {
         public static bool CanBuildOnTileType(this TileType tileType)
         {
-            switch (tileType)
+            return tileType switch
             {
-                case TileType.Grass:
-                    return true;
-
-                case TileType.Water:
-                default:
-                    return false;
-            }
+                TileType.Grass => true,
+                _ => false,
+            };
         }
     }
 }

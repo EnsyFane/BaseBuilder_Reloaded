@@ -39,11 +39,21 @@ namespace Assets.Scripts.Models
         /// </summary>
         public Vector2 JobWorkSpotOffset { get; set; } = Vector2.zero;
 
+        public Tile JobWorkSpotTile
+        {
+            get => World.Instance.GetTileAt(Tile.X + (int)JobWorkSpotOffset.x, Tile.Y + (int)JobWorkSpotOffset.y);
+        }
+
         /// <summary>
         /// Offset based on the bottom left tile of the sprite that indicates
         /// where items spawned by this furniture will be spawned.
         /// </summary>
         public Vector2 JobSpawnSpotOffset { get; set; } = Vector2.zero;
+
+        public Tile JobSpawnSpotTile
+        {
+            get => World.Instance.GetTileAt(Tile.X + (int)JobSpawnSpotOffset.x, Tile.Y + (int)JobSpawnSpotOffset.y);
+        }
 
         /// <summary>
         /// See <see cref="Enterability"/>.
@@ -233,6 +243,10 @@ namespace Assets.Scripts.Models
 
         public void UnsubscribeFurnitureRemoved(Action<Furniture> callback) => cbFurnitureRemoved -= callback;
 
+        public void SubscribeLUAUpdateAction(string luaFunctionName) => updateLUAFunctionNames.Add(luaFunctionName);
+
+        public void UnsubscribeLUAUpdateAction(string luaFunctionName) => updateLUAFunctionNames.Remove(luaFunctionName);
+
         protected bool DefaultIsPositionValid(Tile baseTile)
         {
             for (var x = baseTile.X; x < baseTile.X + Width; x++)
@@ -251,6 +265,26 @@ namespace Assets.Scripts.Models
             return true;
         }
 
-        // Continue from getParameter line 430
+        public object GetParameter(string key, object defaultValue)
+        {
+            return furnitureParameters.ContainsKey(key) ? furnitureParameters[key] : defaultValue;
+        }
+
+        public void SetParameter(string key, object value)
+        {
+            furnitureParameters[key] = value;
+        }
+
+        public void Deconstruct()
+        {
+            Tile.UnplaceFurniture();
+
+            cbFurnitureRemoved?.Invoke(this);
+
+            if (CanEncloseRooms)
+            {
+                // TODO: recalculate rooms.
+            }
+        }
     }
 }
