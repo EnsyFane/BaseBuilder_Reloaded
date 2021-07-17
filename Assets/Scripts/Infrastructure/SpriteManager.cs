@@ -14,6 +14,11 @@ namespace Assets.Scripts.Infrastructure
 
         private Dictionary<string, Sprite> _sprites;
 
+        public static Sprite ErrorSprite
+        {
+            get => Instance._sprites["Error/Error"];
+        }
+
         public void OnEnable()
         {
             Instance = this;
@@ -35,7 +40,7 @@ namespace Assets.Scripts.Infrastructure
             }
 
             Debug.Log($"No sprite with identifier {finalSpriteName} was loaded.");
-            return _sprites["Error/Error"];
+            return ErrorSprite;
         }
 
         private void LoadSprites()
@@ -68,7 +73,7 @@ namespace Assets.Scripts.Infrastructure
         private void LoadImage(string spriteCategory, string filePath)
         {
             // TEMP: Unity's LoadImage is returning true when loading files that end with .meta or .xml
-            if (filePath.EndsWith(".xml") || filePath.EndsWith(".meta"))
+            if (filePath.EndsWith(".xml") || filePath.EndsWith(".meta") || filePath.EndsWith(".json"))
             {
                 return;
             }
