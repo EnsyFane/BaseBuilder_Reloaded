@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastructure.LUAParsing;
+﻿using Assets.Scripts.Infrastructure.Config;
+using Assets.Scripts.Infrastructure.LUAParsing;
 using MoonSharp.Interpreter;
 using System;
 using System.Collections.Generic;
@@ -283,5 +284,27 @@ namespace Assets.Scripts.Models
                 // TODO: recalculate rooms.
             }
         }
+
+        #region Serialization
+
+        public static Furniture GetFurnitureFromJson(FurnitureJson furnitureJson)
+        {
+            return new Furniture
+            {
+                Name = furnitureJson.Name,
+                ObjectType = furnitureJson.ObjectType,
+                MovementCost = furnitureJson.MovementCost ?? 1,
+                Width = furnitureJson.Width ?? 1,
+                Height = furnitureJson.Height ?? 1,
+                CanLinkToNeighbour = furnitureJson.CanLinkToNeighbour ?? false,
+                CanEncloseRooms = furnitureJson.CanEncloseRooms ?? false,
+                updateLUAFunctionNames = furnitureJson.UpdateLUAFunctionNames != null ? new List<string>(furnitureJson.UpdateLUAFunctionNames) : new List<string>(),
+                furnitureParameters = furnitureJson.FurnitureParameters != null ? new Dictionary<string, object>(furnitureJson.FurnitureParameters) : new Dictionary<string, object>(),
+                JobWorkSpotOffset = new Vector2(furnitureJson.JobWorkSpotOffsetX ?? 0, furnitureJson.JobWorkSpotOffsetY ?? 0),
+                JobSpawnSpotOffset = new Vector2(furnitureJson.JobSpawnSpotOffsetX ?? 0, furnitureJson.JobSpawnSpotOffsetY ?? 0)
+            };
+        }
+
+        #endregion Serialization
     }
 }

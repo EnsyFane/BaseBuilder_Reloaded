@@ -106,7 +106,7 @@ namespace Assets.Scripts.Infrastructure
         {
             foreach (var sprite in spriteDescriptor.Sprites)
             {
-                LoadSprite(spriteCategory, sprite.Name, imageTexture, new Rect(sprite.X, sprite.Y, sprite.Width, sprite.Height), sprite.pixelsPerUnit);
+                LoadSprite(spriteCategory, sprite.Name, imageTexture, new Rect(sprite.X, sprite.Y, sprite.Width, sprite.Height), sprite.PixelsPerUnit);
             }
         }
 

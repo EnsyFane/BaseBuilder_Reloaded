@@ -170,8 +170,9 @@ namespace Assets.Scripts.Models
             var furnitureJson = File.ReadAllText(furnitureJsonPath);
 
             var furnitureDescriptor = JsonConvert.DeserializeObject<FurnitureDescriptor>(furnitureJson);
+            var discoveredFurnitures = furnitureDescriptor.Furnitures.Select(furniture => Furniture.GetFurnitureFromJson(furniture));
 
-            foreach (var furniture in furnitureDescriptor.Furnitures)
+            foreach (var furniture in discoveredFurnitures)
             {
                 furniturePrototypes.Add(furniture.ObjectType, furniture);
             }
