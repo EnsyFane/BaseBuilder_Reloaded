@@ -17,6 +17,6 @@ namespace Assets.Scripts.Infrastructure.Config
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public int pixelsPerUnit { get; set; }
+        public int PixelsPerUnit { get; set; }
     }
 }

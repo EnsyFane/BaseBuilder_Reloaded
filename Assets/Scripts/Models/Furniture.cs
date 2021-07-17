@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastructure.LUAParsing;
+﻿using Assets.Scripts.Infrastructure.Config;
+using Assets.Scripts.Infrastructure.LUAParsing;
 using MoonSharp.Interpreter;
 using System;
 using System.Collections.Generic;
@@ -97,8 +98,8 @@ namespace Assets.Scripts.Models
         /// The cost of moving through a tile with this furniture.
         /// </summary>
         /// <remarks>
-        /// The cost is added to the tile movement cost.
-        /// Setting a value of <code>Infinity</code> means the tile is impassible.
+        /// The cost is a multiplier for the tile movement cost.
+        /// Setting a value of <code>0</code> means the tile is impassible.
         /// </remarks>
         public float MovementCost { get; protected set; }
 
@@ -114,8 +115,8 @@ namespace Assets.Scripts.Models
 
         public bool CanLinkToNeighbour { get; protected set; }
 
-        public Action<Furniture> cbFurnitureChanged { get; protected set; }
-        public Action<Furniture> cbFurnitureRemoved { get; protected set; }
+        public Action<Furniture> CbFurnitureChanged { get; protected set; }
+        public Action<Furniture> CbFurnitureRemoved { get; protected set; }
 
         private readonly Func<Tile, bool> isPositionValidFunction;
 
@@ -205,40 +206,40 @@ namespace Assets.Scripts.Models
             {
                 Tile t;
                 t = createdFurniture.Tile.NorthTile;
-                if (t != null && t.Furniture != null && t.Furniture.cbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
+                if (t != null && t.Furniture != null && t.Furniture.CbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
                 {
-                    t.Furniture.cbFurnitureChanged(t.Furniture);
+                    t.Furniture.CbFurnitureChanged(t.Furniture);
                 }
 
                 t = createdFurniture.Tile.EastTile;
-                if (t != null && t.Furniture != null && t.Furniture.cbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
+                if (t != null && t.Furniture != null && t.Furniture.CbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
                 {
-                    t.Furniture.cbFurnitureChanged(t.Furniture);
+                    t.Furniture.CbFurnitureChanged(t.Furniture);
                 }
 
                 t = createdFurniture.Tile.SouthTile;
-                if (t != null && t.Furniture != null && t.Furniture.cbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
+                if (t != null && t.Furniture != null && t.Furniture.CbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
                 {
-                    t.Furniture.cbFurnitureChanged(t.Furniture);
+                    t.Furniture.CbFurnitureChanged(t.Furniture);
                 }
 
                 t = createdFurniture.Tile.WestTile;
-                if (t != null && t.Furniture != null && t.Furniture.cbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
+                if (t != null && t.Furniture != null && t.Furniture.CbFurnitureChanged != null && t.Furniture.ObjectType == createdFurniture.ObjectType)
                 {
-                    t.Furniture.cbFurnitureChanged(t.Furniture);
+                    t.Furniture.CbFurnitureChanged(t.Furniture);
                 }
             }
 
             return createdFurniture;
         }
 
-        public void SubscribeFurnitureChanged(Action<Furniture> callback) => cbFurnitureChanged += callback;
+        public void SubscribeFurnitureChanged(Action<Furniture> callback) => CbFurnitureChanged += callback;
 
-        public void UnsubscribeFurnitureChanged(Action<Furniture> callback) => cbFurnitureChanged -= callback;
+        public void UnsubscribeFurnitureChanged(Action<Furniture> callback) => CbFurnitureChanged -= callback;
 
-        public void SubscribeFurnitureRemoved(Action<Furniture> callback) => cbFurnitureRemoved += callback;
+        public void SubscribeFurnitureRemoved(Action<Furniture> callback) => CbFurnitureRemoved += callback;
 
-        public void UnsubscribeFurnitureRemoved(Action<Furniture> callback) => cbFurnitureRemoved -= callback;
+        public void UnsubscribeFurnitureRemoved(Action<Furniture> callback) => CbFurnitureRemoved -= callback;
 
         public void SubscribeLUAUpdateAction(string luaFunctionName) => updateLUAFunctionNames.Add(luaFunctionName);
 
@@ -276,12 +277,34 @@ namespace Assets.Scripts.Models
         {
             Tile.UnplaceFurniture();
 
-            cbFurnitureRemoved?.Invoke(this);
+            CbFurnitureRemoved?.Invoke(this);
 
             if (CanEncloseRooms)
             {
                 // TODO: recalculate rooms.
             }
         }
+
+        #region Serialization
+
+        public static Furniture GetFurnitureFromJson(FurnitureJson furnitureJson)
+        {
+            return new Furniture
+            {
+                Name = furnitureJson.Name,
+                ObjectType = furnitureJson.ObjectType,
+                MovementCost = furnitureJson.MovementCost ?? 1,
+                Width = furnitureJson.Width ?? 1,
+                Height = furnitureJson.Height ?? 1,
+                CanLinkToNeighbour = furnitureJson.CanLinkToNeighbour ?? false,
+                CanEncloseRooms = furnitureJson.CanEncloseRooms ?? false,
+                updateLUAFunctionNames = furnitureJson.UpdateLUAFunctionNames != null ? new List<string>(furnitureJson.UpdateLUAFunctionNames) : new List<string>(),
+                furnitureParameters = furnitureJson.FurnitureParameters != null ? new Dictionary<string, object>(furnitureJson.FurnitureParameters) : new Dictionary<string, object>(),
+                JobWorkSpotOffset = new Vector2(furnitureJson.JobWorkSpotOffsetX ?? 0, furnitureJson.JobWorkSpotOffsetY ?? 0),
+                JobSpawnSpotOffset = new Vector2(furnitureJson.JobSpawnSpotOffsetX ?? 0, furnitureJson.JobSpawnSpotOffsetY ?? 0)
+            };
+        }
+
+        #endregion Serialization
     }
 }

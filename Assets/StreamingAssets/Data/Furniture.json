@@ -1,0 +1,13 @@
+{
+	"Furnitures": [
+		{
+			"Name": "Basic Wall",
+			"ObjectType": "furn_SteelWall",
+			"MovementCost": 0,
+			"Width": 1,
+			"Height": 1,
+			"CanLinkToNeighbour": true,
+			"CanEncloseRooms": true
+		}
+	]
+}

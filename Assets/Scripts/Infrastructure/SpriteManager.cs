@@ -1,4 +1,5 @@
 using Assets.Scripts.Infrastructure.Config;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -13,6 +14,11 @@ namespace Assets.Scripts.Infrastructure
         public static SpriteManager Instance { get; private set; }
 
         private Dictionary<string, Sprite> _sprites;
+
+        public static Sprite ErrorSprite
+        {
+            get => Instance._sprites["Error/Error"];
+        }
 
         public void OnEnable()
         {
@@ -35,7 +41,7 @@ namespace Assets.Scripts.Infrastructure
             }
 
             Debug.Log($"No sprite with identifier {finalSpriteName} was loaded.");
-            return _sprites["Error/Error"];
+            return ErrorSprite;
         }
 
         private void LoadSprites()
@@ -68,7 +74,7 @@ namespace Assets.Scripts.Infrastructure
         private void LoadImage(string spriteCategory, string filePath)
         {
             // TEMP: Unity's LoadImage is returning true when loading files that end with .meta or .xml
-            if (filePath.EndsWith(".xml") || filePath.EndsWith(".meta"))
+            if (filePath.EndsWith(".xml") || filePath.EndsWith(".meta") || filePath.EndsWith(".json"))
             {
                 return;
             }
@@ -85,7 +91,7 @@ namespace Assets.Scripts.Infrastructure
                 if (File.Exists(jsonPath))
                 {
                     var spriteJson = File.ReadAllText(jsonPath);
-                    var spriteDescriptor = JsonUtility.FromJson<SpriteDescriptor>(spriteJson);
+                    var spriteDescriptor = JsonConvert.DeserializeObject<SpriteDescriptor>(spriteJson);
                     LoadSpriteMapFromJson(spriteCategory, imageTexture, spriteDescriptor);
                 }
                 else
@@ -100,7 +106,7 @@ namespace Assets.Scripts.Infrastructure
         {
             foreach (var sprite in spriteDescriptor.Sprites)
             {
-                LoadSprite(spriteCategory, sprite.Name, imageTexture, new Rect(sprite.X, sprite.Y, sprite.Width, sprite.Height), sprite.pixelsPerUnit);
+                LoadSprite(spriteCategory, sprite.Name, imageTexture, new Rect(sprite.X, sprite.Y, sprite.Width, sprite.Height), sprite.PixelsPerUnit);
             }
         }
 
