@@ -1,4 +1,5 @@
 using Assets.Scripts.Infrastructure.Config;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -90,7 +91,7 @@ namespace Assets.Scripts.Infrastructure
                 if (File.Exists(jsonPath))
                 {
                     var spriteJson = File.ReadAllText(jsonPath);
-                    var spriteDescriptor = JsonUtility.FromJson<SpriteDescriptor>(spriteJson);
+                    var spriteDescriptor = JsonConvert.DeserializeObject<SpriteDescriptor>(spriteJson);
                     LoadSpriteMapFromJson(spriteCategory, imageTexture, spriteDescriptor);
                 }
                 else

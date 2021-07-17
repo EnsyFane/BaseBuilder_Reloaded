@@ -1,6 +1,7 @@
 using Assets.Scripts.Infrastructure.Config;
 using Assets.Scripts.Infrastructure.LUAParsing;
 using MoonSharp.Interpreter;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -168,7 +169,7 @@ namespace Assets.Scripts.Models
             var furnitureJsonPath = Path.Combine(Application.streamingAssetsPath, "Data", "Furniture.json");
             var furnitureJson = File.ReadAllText(furnitureJsonPath);
 
-            var furnitureDescriptor = JsonUtility.FromJson<FurnitureDescriptor>(furnitureJson);
+            var furnitureDescriptor = JsonConvert.DeserializeObject<FurnitureDescriptor>(furnitureJson);
 
             foreach (var furniture in furnitureDescriptor.Furnitures)
             {
