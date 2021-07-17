@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Infrastructure.Config
 {
+    [Serializable]
     public class SpriteDescriptor
     {
         public IEnumerable<JsonSprite> Sprites { get; set; }
     }
 
+    [Serializable]
     public class JsonSprite
     {
         public string Name { get; set; }
