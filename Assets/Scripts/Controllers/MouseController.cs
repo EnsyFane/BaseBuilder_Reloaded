@@ -160,5 +160,10 @@ namespace Assets.Scripts.Controllers
         private void UpdateSelection()
         {
         }
+
+        public void StartBuildMode()
+        {
+            currentMouseMode = MouseMode.Build;
+        }
     }
 }
