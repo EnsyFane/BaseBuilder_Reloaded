@@ -19,9 +19,6 @@ namespace Assets.Scripts.Controllers
         [Min(1f)]
         public float edgeScrollSpeed;
 
-        [Range(0.0001f, 0.9999f)]
-        public float edgeScrollThreshold;
-
         public Tile TileUnderCursor
         {
             get => World.Instance.GetTileAt(Mathf.FloorToInt(CurrentMousePosition.x), Mathf.FloorToInt(CurrentMousePosition.y));
@@ -125,21 +122,21 @@ namespace Assets.Scripts.Controllers
             else
             {
                 var mousePosition = camera.ScreenToViewportPoint(Input.mousePosition);
-                var toMove = Vector2.zero;
-                if (mousePosition.x < edgeScrollThreshold)
+                var toMove = Vector3.zero;
+                if (mousePosition.x <= 0)
                 {
                     toMove.x = -1f;
                 }
-                else if (mousePosition.x > 1 - edgeScrollThreshold)
+                else if (mousePosition.x >= 1)
                 {
                     toMove.x = 1f;
                 }
 
-                if (mousePosition.y < edgeScrollThreshold)
+                if (mousePosition.y <= 0)
                 {
                     toMove.y = -1f;
                 }
-                else if (mousePosition.y > 1 - edgeScrollThreshold)
+                else if (mousePosition.y >= 1)
                 {
                     toMove.y = 1f;
                 }
@@ -150,6 +147,11 @@ namespace Assets.Scripts.Controllers
             camera.orthographicSize -= camera.orthographicSize * Input.GetAxis("Mouse ScrollWheel");
 
             camera.orthographicSize = Mathf.Clamp(camera.orthographicSize, 3f, 25f);
+
+            camera.transform.position = new Vector3(
+                Mathf.Clamp(camera.transform.position.x, 0, WorldController.Instance.World.Width),
+                Mathf.Clamp(camera.transform.position.y, 0, WorldController.Instance.World.Height),
+                camera.transform.position.z);
         }
 
         private void UpdateSelection()
