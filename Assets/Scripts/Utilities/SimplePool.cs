@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Utilities
 {
+    // TODO: Implement this my own way
     public static class SimplePool
     {
         // You can avoid resizing of the Stack's internal array by

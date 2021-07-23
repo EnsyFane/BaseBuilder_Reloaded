@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.LUAParsing
 {
+    /// <summary>
+    /// Class that is used to load and execute LUA scripts.
+    /// </summary>
     public class FurnitureActions
     {
         private static FurnitureActions _instance;

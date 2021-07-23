@@ -9,6 +9,9 @@
         Water
     }
 
+    /// <summary>
+    /// Extension class for <see cref="TileType"/>.
+    /// </summary>
     public static class TileTypeMethods
     {
         public static bool CanBuildOnTileType(this TileType tileType)

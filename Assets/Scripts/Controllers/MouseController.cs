@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Controllers
 {
+    /// <summary>
+    /// Controller for mouse inputs.
+    /// </summary>
     public class MouseController : MonoBehaviour
     {
         public enum MouseMode

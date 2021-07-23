@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controllers
 {
+    /// <summary>
+    /// Controller that creates and modifies <see cref="GameObject"/>s associated with <see cref="Furniture"/>.
+    /// </summary>
     public class FurnitureSpriteController : MonoBehaviour
     {
         private Dictionary<Furniture, GameObject> _furnitureGameObjectMap;
